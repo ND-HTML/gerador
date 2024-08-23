@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2695/2695969.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ND GERADOR - Bins & CC's</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin-top: -5%;
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+        textarea {
+            resize: none;
+            overflow: auto; /* Adiciona rolagem automática se necessário */
+            height: 300px;
+        }
+        .navbar-brand img {
+            height: 1.6em;
+        }
+        .btn-custom {
+            color: #fff;
+            background-color: #d8ffe1;
+            border-color: #bdbdbd;
+        }
+        .btn-custom:hover {
+            background-color: #93fca9;
+            border-color: #bdbdbd;
+        }
+        .btn-custom:focus, .btn-custom:active {
+            background-color: #71f88e;
+            border-color: #bdbdbd;
+        }
+        .btn-checker {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-checker:hover,
+        .btn-checker:focus,
+        .btn-checker:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        .btn-group {
+            display: none; /* Inicialmente escondido */
+            gap: 10px; /* Espaço entre os botões */
+        }
+        .btn-group.show {
+            display: flex;
+        }
+        .btn-group .btn {
+            flex: 1; /* Faz os botões terem o mesmo tamanho */
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body onload="ccgen();" class="bg-3 text-2">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-1 sticky-top">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/sourecbincc_logo.png" alt="ND GERADOR LUNH">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
+            <ul class="navbar-nav"></ul>
+            <div class="ml-auto">
+                <hr class="d-lg-none d-xl-none">
+            </div>
+        </div>
+    </nav>
+    <br>
+
+    <main class="main-content">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-md-12 pt-2">
+                    <form name="console" id="console">
+                        <input type="hidden" name="tr" value="1000">
+                        <input type="hidden" name="L" value="1L">
+                        <select name="ccnsp" class="input_text" style="display:none;">
+                            <option selected="selected">None</option>
+                        </select>
+
+                        <div class="input-group shadow-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Digite sua BIN</span>
+                            </div>
+                            <input type="text" class="form-control" id="ccpN" name="ccp" value=""
+                                placeholder="xxxx xxxx xxxx xxxx" maxlength="16">
+                        </div>
+
+                        <div class="input-group shadow-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">CVV</span>
+                            </div>
+                            <input type="text" class="form-control" id="eccv" maxlength="3" value="Rnd" placeholder="BIN Aleatória: Digite Rnd">
+                            <div class="input-group-prepend input-group-append">
+                                <span class="input-group-text">Mês</span>
+                            </div>
+                            <select name="emeses" class="form-control">
+                                <option value="rnd">Rnd</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <div class="input-group-prepend input-group-append">
+                                <span class="input-group-text">Ano</span>
+                            </div>
+                            <select name="eyear" class="form-control">
+                                <option value="rnd">Rnd</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                                <option value="2031">2031</option>
+                                <option value="2032">2032</option>
+                                <option value="2033">2033</option>
+                                <option value="2034">2034</option>
+                                <option value="2035">2035</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group shadow-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Incluir</span>
+                            </div>
+                            <div class="form-control custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="ccexpdat" name="ccexpdat" checked>
+                                <label class="custom-control-label" for="ccexpdat">Data</label>
+                            </div>
+                            <div class="form-control custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="ccvi" name="ccvi" checked>
+                                <label class="custom-control-label" for="ccvi">CVV</label>
+                            </div>
+                            <div class="form-control custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="ccbank" name="ccbank">
+                                <label class="custom-control-label" for="ccbank">Bandeira</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group shadow-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Quantidade</span>
+                            </div>
+                            <input type="number" class="form-control" name="ccghm" maxlength="4" value="10"
+                                placeholder="Enter Amount">
+                            <div class="input-group-append input-group-prepend">
+                                <span class="input-group-text">Formato</span>
+                            </div>
+                            <select class="form-control" name="ccoudatfmt">
+                                <option value="CHECKER">CHK</option>
+                                <option value="CSV">CSV</option>
+                                <option value="XML">XML</option>
+                                <option value="JSON">JSON</option>
+                            </select>
+                            <div class="input-group-append">
+                                <a name="gerar" id="gerar" class="btn btn-custom" onclick="generateCards()">
+                                    <i class="fa fa-cogs"></i> Gerar
+                                </a>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group shadow-sm">
+                            <textarea class="form-control" rows="10" name="output2" id="output2" readonly></textarea>
+                        </div>
+
+                        <!-- Botões Copiar, Baixar.txt e Checker -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success" id="copyButton" onclick="copyToClipboard()">Copiar para Área de Transferência</button>
+                            <button type="button" class="btn btn-primary" id="downloadButton" onclick="downloadFile()">Baixar todos os Cartões</button>
+                            <button type="button" class="btn btn-checker" id="checkerButton" onclick="openChecker()">Luhn algorithm Checker</button>
+                        </div>
+                    </form>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+    <script defer src="js/script.js"></script>
+    <script defer src="js/bin_generator.js"></script>
+    <script>
+        function generateCards() {
+            // Exemplo de função para geração de cartões, substitua pela sua lógica
+            document.getElementById('output2').value = "Card 1\nCard 2\nCard 3"; // Simulação de dados gerados
+
+            // Mostrar os botões Copiar, Baixar.txt e Checker
+            document.querySelector('.btn-group').classList.add('show');
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('output2').value;
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert('Texto copiado para a Área de Transferência');
+            });
+        }
+
+        function downloadFile() {
+            const text = document.getElementById('output2').value;
+            const filename = 'Lista.txt';
+            const blob = new Blob([text], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        function openChecker() {
+            const binNumber = document.getElementById('ccpN').value;
+            const url = `https://tools.waytolearnx.com/credit-card-validator?n=${encodeURIComponent(binNumber)}`;
+            window.open(url, '_blank');
+        }
+
+        // Função para limpar o formulário
+        function clearForm() {
+            const form = document.getElementById('console');
+            form.reset(); // Limpa todos os campos do formulário
+        }
+
+        // Adiciona o evento de carregar a página para limpar o formulário
+        window.addEventListener('load', clearForm);
+    </script>
+
+    <script>
+        if (document.addEventListener) {
+            document.addEventListener("contextmenu", function(e) {
+                e.preventDefault();
+                return false;
+            });
+        } else { //Versões antigas do IE
+            document.attachEvent("oncontextmenu", function(e) {
+                e = e || window.event;
+                e.returnValue = false;
+                return false;
+            });
+        }
+    </script>
+    
+    <script>
+        if (document.addEventListener) {
+            document.addEventListener("keydown", bloquearSource);
+        } else { //Versões antigas do IE
+            document.attachEvent("onkeydown", bloquearSource);
+        }
+        
+        function bloquearSource(e) {
+            e = e || window.event;
+        
+            var code = e.which || e.keyCode;
+        
+            if (
+                e.ctrlKey &&
+                (code == 83 || code == 85) //83 = S, 85 = U
+            ) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+        
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
