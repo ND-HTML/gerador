@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ND GERADOR - Bins & CC's</title>
+    <title>ND GERADOR - Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
@@ -17,6 +17,13 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
+        }
+        .navbar {
+            padding: 10px 20px; /* Ajusta o padding do cabeçalho para garantir o tamanho adequado */
+        }
+
+        .navbar-brand img {
+            height: 1.6em; /* Ajusta a altura da imagem do logotipo */
         }
         .main-content {
             display: flex;
@@ -62,6 +69,55 @@
             color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
             background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
             border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        
+        .btn-KitBico {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-KitBico:hover,
+        .btn-KitBico:focus,
+        .btn-KitBico:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        .btn-Consultas {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-Consultas:hover,
+        .btn-Consultas:focus,
+        .btn-Consultas:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        .btn-primary {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #2a9c30;
+            border-color: #26912c;
+        }
+        .btn-primary:hover,
+        .btn-primary:focus,
+        .btn-primary:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: rgb(12, 133, 18); /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: rgb(12, 119, 17); /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        .btn-success {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #2a9c30;
+            border-color: #26912c;
+        }
+        .btn-success:hover,
+        .btn-success:focus,
+        .btn-success:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: rgb(12, 133, 18); /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: rgb(12, 119, 17); /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
         }
         .btn-group {
             display: none; /* Inicialmente escondido */
@@ -123,7 +179,7 @@
                                 <span class="input-group-text">Digite sua BIN</span>
                             </div>
                             <input type="text" class="form-control" id="ccpN" name="ccp" value=""
-                                placeholder="xxxx xxxx xxxx xxxx" maxlength="16">
+                                placeholder="xxxx xxxx xxxx xxxx - Clique em (Gerar) depois em (Bins) para adquirir uma BIN caso não tenha" maxlength="18">
                         </div>
 
                         <div class="input-group shadow-sm mb-3">
@@ -215,9 +271,11 @@
 
                         <!-- Botões Copiar, Baixar.txt e Checker -->
                         <div class="btn-group">
-                            <button type="button" class="btn btn-success" id="copyButton" onclick="copyToClipboard()">Copiar para Área de Transferência</button>
-                            <button type="button" class="btn btn-primary" id="downloadButton" onclick="downloadFile()">Baixar todos os Cartões</button>
-                            <button type="button" class="btn btn-checker" id="checkerButton" onclick="openChecker()">Luhn algorithm Checker</button>
+                            <button type="button" class="btn btn-success" id="copyButton" onclick="copyToClipboard()">Copiar todos Cartões</button>
+                            <button type="button" class="btn btn-primary" id="downloadButton" onclick="downloadFile()">Baixar todos Cartões</button>
+                            <button type="button" class="btn btn-checker" id="checkerButton" onclick="openChecker()">Luhn Checker</button>
+                            <button type="button" class="btn btn-KitBico" id="KitBicoButton" onclick="openKitBico()">Dados de Bico</button>
+                            <button type="button" class="btn btn-Consultas" id="ConsultasButton" onclick="openConsultas()">Bins</button>
                         </div>
                     </form>
 
@@ -256,6 +314,18 @@
         function openChecker() {
             const binNumber = document.getElementById('ccpN').value;
             const url = `https://tools.waytolearnx.com/credit-card-validator?n=${encodeURIComponent(binNumber)}`;
+            window.open(url, '_blank');
+        }
+
+        function openKitBico() {
+            const binNumber = document.getElementById('ccpN').value;
+            const url = `kitbico.html?n=${encodeURIComponent(binNumber)}`;
+            window.open(url, '_blank');
+        }
+
+        function openConsultas() {
+            const binNumber = document.getElementById('ccpN').value;
+            const url = `bins.html?n=${encodeURIComponent(binNumber)}`;
             window.open(url, '_blank');
         }
 
