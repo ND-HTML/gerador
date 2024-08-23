@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2695/2695969.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ND GERADOR - Dados de Bico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Impede rolar a página para cima e para baixo */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            padding: 10px 20px; /* Ajusta o padding do cabeçalho para garantir o tamanho adequado */
+        }
+
+        .navbar-brand img {
+            height: 1.6em; /* Ajusta a altura da imagem do logotipo */
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1; /* Permite que o conteúdo principal expanda para preencher o espaço disponível */
+            padding: 20px; /* Adiciona espaçamento interno ao conteúdo principal */
+            box-sizing: border-box; /* Inclui padding na largura total */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Inclui padding e border na largura total */
+        }
+
+        .container h2 {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-container h3 {
+            margin-top: 0;
+            color: black; /* Muda a cor do texto "Resultado:" para preto */
+        }
+
+        /* Estilo já existente */
+
+    .container h2 {
+        color: black; /* Muda a cor do texto "Dados de Bico" para preto */
+    }
+
+    .btn-secondary {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-secondary:hover,
+        .btn-secondary:focus,
+        .btn-secondary:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+
+        .btn-info {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #2a9c30;
+            border-color: #26912c;
+
+        }
+        .btn-info:hover,
+        .btn-info:focus,
+        .btn-info:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: rgb(12, 133, 18); /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: rgb(12, 119, 17); /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+
+        .btn-success {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #2a9c30;
+            border-color: #26912c;
+
+        }
+        .btn-success:hover,
+        .btn-success:focus,
+        .btn-success:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: rgb(12, 133, 18); /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: rgb(12, 119, 17); /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+
+        .result-container p {
+            margin: 5px 0;
+        }
+
+        .btn-container {
+            display: none; /* Esconde os botões inicialmente */
+            margin-top: 20px;
+        }
+
+        .btn-container button {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body onload="ccgen();" class="bg-3 text-2">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-1 sticky-top">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/sourecbincc_logo.png" alt="ND GERADOR LUNH">
+        </a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Dados de Bico</h2>
+            
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" onchange="atualizarLista()">
+                    <option value="">Selecione</option>
+                    <option value="masculino">Homem</option>
+                    <option value="feminino">Mulher</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="nacionalidade">Selecione o País:</label>
+                <select id="nacionalidade" name="nacionalidade">
+                    <option value="brasileiro">Brasil</option>
+                    <option value="americano">América (EUA)</option>
+                    <option value="chileno">Chile</option>
+                    <option value="colombiano">Colombia</option>
+                    <option value="mexicano">México</option>
+                    <option value="peruano">Peru</option>
+                    <option value="uruguaio">Uruguai</option>
+                    <option value="paraguaio">Paraguai</option>
+                    <option value="argentino">Argentina</option>
+                    <option value="canadense">Canadá</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="gerarResultados()">Gerar</button>
+
+            <div id="result-container" class="result-container">
+                <h3>Resultado:</h3>
+                <p id="result-name">Nome: </p>
+                <p id="result-cpf">CPF: </p>
+                <p id="result-sexo">Sexo: </p>
+                <p id="result-nascimento">Nascimento: </p>
+            </div>
+
+            <div id="btn-container" class="btn-container">
+                <button class="btn btn-success" onclick="baixarDados()">Baixar</button>
+                <button class="btn btn-info" onclick="copiarParaAreaDeTransferencia()">Copiar</button>
+                <button class="btn btn-secondary" onclick="funcaoEmBranco()">Voltar para o Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var dados = {
+            masculino: {
+                brasileiro: [
+                    { nome: 'Francisco Alan Abdias De Oliveira Filho', cpf: '710.530.594-00', nascimento: '03/03/2007' },
+                    { nome: 'Adilson Araújo Macedo', cpf: '066.413.923-09', nascimento: '30/07/2005' },
+                    { nome: 'Mayanderson de Jesus Araújo Lage', cpf: '117.966.367-54', nascimento: '20/03/1986' },
+                    { nome: 'Clemilson de Melo Mendes', cpf: '052.270.157-40', nascimento: '08/10/1992' },
+                    { nome: 'Nathan Crisostomo Cardoso', cpf: '093.600.354-59', nascimento: '28/11/1991' },
+                    { nome: 'Elio Felix Da Silva', cpf: '018.939.405-60', nascimento: '08/03/1977' },
+                    { nome: 'Rafel Tosi Dias de Souza', cpf: '280.397.448-73', nascimento: '14/03/1981' },
+                    { nome: 'Joao Vitor Justino Marciano', cpf: '539.512.468-39', nascimento: '27/07/2002' },
+                    { nome: 'Leandro Pereira Rocha', cpf: '102.945.107-96', nascimento: '24/05/1983' },
+                    { nome: 'John Wallace Da Silva Viana', cpf: '122.250.417-09', nascimento: '25/08/1988' },
+                    { nome: 'Breno Romeiro Gomes', cpf: '070.441.631-06', nascimento: '17/10/2000' },
+                    { nome: 'Odair Justo Dos Santos', cpf: '153.859.548-61', nascimento: '12/01/1972' },
+                ],
+                americano: [
+                    { nome: 'Rickey Holler', cpf: '017-68-0003', nascimento: '12/10/1918' },
+                    { nome: 'Melvin Gutierrez', cpf: '462-32-1232', nascimento: '29/01/1978' },
+                    { nome: 'Thomas Martin', cpf: '678-10-4357', nascimento: '27/05/1949' },
+                    { nome: 'Anthony Pittman', cpf: '515-48-0731', nascimento: '29/08/1927' },
+                    { nome: 'Gregory Woosley', cpf: '630-94-7441', nascimento: '08/09/1988' },
+                    { nome: 'William Schmidt', cpf: '480-82-4362', nascimento: '15/05/1963' },
+                    { nome: 'Jimmy Seigler', cpf: '441-36-3368', nascimento: '17/06/1968' },
+                    { nome: 'Roy Kelly', cpf: '333-03-9722', nascimento: '11/11/1973' },
+                    { nome: 'Ralph French', cpf: '117-92-5295', nascimento: '22/07/1993' }
+                ]
+            },
+            feminino: {
+                brasileiro: [
+                    { nome: 'Nathalia Lima', cpf: '43322325857', nascimento: '25/08/1995' },
+                    { nome: 'Regiane Lara Godinho', cpf: '086.868.086-97', nascimento: '27/10/1989' },
+                    { nome: 'Regiane Godinho Mariano', cpf: '362.157.478-66', nascimento: '13/04/1994' },
+                    { nome: 'Samile Almeida Dos Reis', cpf: '091.536.122-13', nascimento: '02/12/2004' },
+                    { nome: 'Vitoria Karolina Alves', cpf: '155.423.376-35', nascimento: '31/03/2002' },
+                    { nome: 'Julieta Abani Mafra', cpf: '036.997.008-01', nascimento: '20/03/1962' },
+                    { nome: 'Gabrieli Andrade Correia', cpf: '562.240.498-31', nascimento: '22/04/2004' },
+                    { nome: 'Bianca Dos Santos Batista', cpf: '416.833.728-67', nascimento: '07/01/1997' },
+                    { nome: 'Barbara Caroline Vaz Da Silva', cpf: '047.021.690-50', nascimento: '17/12/1999' },
+                ],
+                americano: [
+                    { nome: 'Courtney Loyd', cpf: '501-34-8320', nascimento: '23/02/1933' },
+                    { nome: 'Jessica Shively', cpf: '770-36-3259', nascimento: '25/10/1955' },
+                    { nome: 'Laura Mohler', cpf: '212-02-7593', nascimento: '18/01/1988' },
+                    { nome: 'Alba Norris', cpf: '161-16-5340', nascimento: '02/12/1985' },
+                    { nome: 'Patricia Johnson', cpf: '004-56-4536', nascimento: '20/02/1953' },
+                    { nome: 'Beulah Fritz', cpf: '456-16-4609', nascimento: '23/10/2000' },
+                ]
+            }
+        };
+
+        function gerarResultados() {
+            var sexo = document.getElementById('sexo').value;
+            var nacionalidade = document.getElementById('nacionalidade').value;
+            
+            if (sexo && nacionalidade && dados[sexo] && dados[sexo][nacionalidade]) {
+                var lista = dados[sexo][nacionalidade];
+                var item = lista[Math.floor(Math.random() * lista.length)];
+
+                document.getElementById('result-name').innerText = 'Nome: ' + item.nome;
+                document.getElementById('result-cpf').innerText = 'CPF: ' + item.cpf;
+                document.getElementById('result-sexo').innerText = 'Sexo: ' + (sexo === 'masculino' ? 'Homem' : 'Mulher');
+                document.getElementById('result-nascimento').innerText = 'Nascimento: ' + item.nascimento;
+
+                document.getElementById('result-container').style.display = 'block';
+                document.getElementById('btn-container').style.display = 'block';
+            } else {
+                document.getElementById('result-container').style.display = 'none';
+                document.getElementById('btn-container').style.display = 'none';
+            }
+        }
+
+        function baixarDados() {
+            var nome = document.getElementById('result-name').innerText.split('Nome: ')[1] || 'Nome não disponível';
+            var cpf = document.getElementById('result-cpf').innerText.split('CPF: ')[1] || 'CPF não disponível';
+            var sexo = document.getElementById('result-sexo').innerText.split('Sexo: ')[1] || 'Sexo não disponível';
+            var nascimento = document.getElementById('result-nascimento').innerText.split('Nascimento: ')[1] || 'Nascimento não disponível';
+
+            var texto = `Nome: ${nome}\nCPF: ${cpf}\nSexo: ${sexo}\nNascimento: ${nascimento}`;
+            var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Dados.txt';
+            link.click();
+        }
+
+        function copiarParaAreaDeTransferencia() {
+            var nome = document.getElementById('result-name').innerText.split('Nome: ')[1] || 'Nome não disponível';
+            var cpf = document.getElementById('result-cpf').innerText.split('CPF: ')[1] || 'CPF não disponível';
+            var sexo = document.getElementById('result-sexo').innerText.split('Sexo: ')[1] || 'Sexo não disponível';
+            var nascimento = document.getElementById('result-nascimento').innerText.split('Nascimento: ')[1] || 'Nascimento não disponível';
+
+            var texto = `Nome: ${nome}\nCPF: ${cpf}\nSexo: ${sexo}\nNascimento: ${nascimento}`;
+            navigator.clipboard.writeText(texto).then(function() {
+                alert('Dados copiados para a área de transferência!');
+            }, function(err) {
+                console.error('Erro ao copiar para a área de transferência: ', err);
+            });
+        }
+
+        function funcaoEmBranco() {
+    window.location.href = 'index.html';
+}
+
+        function atualizarLista() {
+            var sexo = document.getElementById('sexo').value;
+            var listaNomes = document.getElementById('name-list');
+            var listaHTML = '';
+
+            if (sexo) {
+                var lista = dados[sexo];
+                listaHTML = '<h4>Lista de ' + (sexo === 'masculino' ? 'Homens' : 'Mulheres') + ':</h4>';
+                listaHTML += '<ul>';
+                for (var nacionalidade in lista) {
+                    listaHTML += '<li><strong>' + nacionalidade.charAt(0).toUpperCase() + nacionalidade.slice(1) + '</strong></li>';
+                    for (var i = 0; i < lista[nacionalidade].length; i++) {
+                        listaHTML += '<li>' + lista[nacionalidade][i].nome + '</li>';
+                    }
+                }
+                listaHTML += '</ul>';
+            }
+
+            listaNomes.innerHTML = listaHTML;
+        }
+        
+        if (document.addEventListener) {
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+    });
+} else { //Versões antigas do IE
+    document.attachEvent("oncontextmenu", function(e) {
+        e = e || window.event;
+        e.returnValue = false;
+        return false;
+    });
+}
+
+if (document.addEventListener) {
+    document.addEventListener("keydown", bloquearSource);
+} else { //Versões antigas do IE
+    document.attachEvent("onkeydown", bloquearSource);
+}
+
+function bloquearSource(e) {
+    e = e || window.event;
+
+    var code = e.which || e.keyCode;
+
+    if (
+        e.ctrlKey &&
+        (code == 83 || code == 85) //83 = S, 85 = U
+    ) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+
+        return false;
+    }
+}
+
+window.onload = function() {
+    // Seleciona a caixa de seleção e redefine o valor para a opção padrão
+    const select = document.getElementById('options');
+    select.selectedIndex = 0;
+
+    // Oculta a caixa de resultado e os botões
+    const resultBox = document.getElementById('result-box');
+    const btnContainer = document.getElementById('btn-container');
+    
+    resultBox.style.display = 'none';
+    btnContainer.style.display = 'none';
+};
+
+    </script>
+</body>
+</html>
