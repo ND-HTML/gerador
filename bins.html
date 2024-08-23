@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2695/2695969.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ND GERADOR - Bins</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Impede rolar a página para cima e para baixo */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            padding: 10px 20px; /* Ajusta o padding do cabeçalho para garantir o tamanho adequado */
+        }
+
+        .navbar-brand img {
+            height: 1.6em; /* Ajusta a altura da imagem do logotipo */
+        }
+
+        .result-container p {
+            margin: 5px 0;
+        }
+
+        .btn-container {
+            display: none; /* Esconde os botões inicialmente */
+            margin-top: 20px;
+            width: 100%; /* Faz com que os botões ocupem toda a largura do container */
+            display: flex;
+            justify-content: space-between; /* Distribui o espaço entre os botões */
+            gap: 10px; /* Espaço entre os botões */
+        }
+
+        .btn-container button {
+            flex: 1; /* Faz com que os botões tenham o mesmo tamanho */
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .btn-copy {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-copy:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-home {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-home:hover {
+            background-color: #218838;
+        }
+
+        .container-custom {
+            width: 70%; /* Aumenta a largura do container */
+            max-width: 600px; /* Define uma largura máxima para o container */
+            height: auto; /* Ajusta a altura automaticamente com base no conteúdo */
+            margin: auto; /* Centraliza horizontalmente */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente o conteúdo dentro do container */
+            align-items: center; /* Alinha o conteúdo horizontalmente ao centro */
+            position: relative; /* Necessário para o ajuste de overflow */
+            transform: translateY(-200px); /* Move o container para cima em relação ao centro vertical da página */
+        }
+
+        .container-custom label {
+            display: block;
+            margin-bottom: 15px; /* Aumenta o espaço abaixo da etiqueta */
+            font-size: 1.5em; /* Aumenta o tamanho do texto da etiqueta */
+            font-weight: bold;
+        }
+
+        .container-custom select {
+            width: 100%; /* Faz com que a caixa de seleção ocupe toda a largura do container */
+            max-width: 600px; /* Define uma largura máxima para a caixa de seleção */
+            padding: 8px; /* Ajusta o padding interno da caixa de seleção */
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box; /* Garante que o padding e a borda estejam incluídos na largura total */
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #e9ecef;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .btn-home {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-home:hover,
+        .btn-home:focus,
+        .btn-home:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: #006ee4; /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: #0164ce; /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+        .btn-copy {
+            color: #fff; /* Cor padrão do texto */
+            background-color: #2a9c30;
+            border-color: #26912c;
+        }
+        .btn-copy:hover,
+        .btn-copy:focus,
+        .btn-copy:active {
+            color: #fff; /* Mantém a cor do texto ao passar o mouse, focar ou clicar */
+            background-color: rgb(12, 133, 18); /* Mantém a cor de fundo ao passar o mouse, focar ou clicar */
+            border-color: rgb(12, 119, 17); /* Mantém a cor da borda ao passar o mouse, focar ou clicar */
+        }
+    </style>
+</head>
+
+<body onload="ccgen();" class="bg-3 text-2">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-1 sticky-top">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/sourecbincc_logo.png" alt="ND GERADOR LUNH">
+        </a>
+    </nav>
+    <div class="container-custom">
+        <label for="options">Escolha uma opção:</label>
+        <select id="options" name="options" onchange="displayResult()">
+            <option value="">Selecione...</option>
+            <option value="opcao1">BIN IFOOD E GAMEPASS</option>
+            <option value="opcao2">BIN BOTICARIO, BELEZA NA WEB, ALIEXPRESS, PAYPAL PLUS, DROGASIL</option>
+            <option value="opcao3">BIN 99APP</option>
+            <option value="opcao4">BIN ALIEXPRESS</option>
+            <option value="opcao5">BIN UBER</option>
+            <option value="opcao6">BIN STRIPE</option>
+            <option value="opcao7">BIN GPAY, UBER, RECARGA VIVO e TIM</option>
+            <option value="opcao8">BIN DROGASIL</option>
+            <option value="opcao9">BIN BACIO DI LATTE, MERCADO PAGO, ADYEN E GATES GRINGAS</option>
+            <option value="opcao10">BIN SHEIN, 99APP</option>
+            <option value="opcao11">BIN SHEIN</option>
+            <option value="opcao12">BIN MAGALU</option>
+            <option value="opcao13">BIN FATURA VIVO OU TIM</option>
+            <option value="opcao14">BIN INGRESSO/COM</option>
+            <option value="opcao15">BIN DROGASIL, FATURA VIVO</option>
+        </select>
+        <div id="result-box" class="result-box" style="display: none;"></div>
+        <div id="btn-container" class="btn-container" style="display: none;">
+            <button id="btn-copy" class="btn-copy" onclick="copyText()">Copiar BIN</button>
+            <button id="btn-home" class="btn-home" onclick="goHome()">Voltar para o Menu</button>
+        </div>
+    </div>
+
+    <script>
+        function displayResult() {
+            const resultBox = document.getElementById('result-box');
+            const btnContainer = document.getElementById('btn-container');
+            const select = document.getElementById('options');
+            const selectedValue = select.value;
+
+            // Define os textos para cada opção
+            const results = {
+                opcao1: "374769",
+                opcao2: "498408",
+                opcao3: "485464",
+                opcao4: "432958",
+                opcao5: "453600",
+                opcao6: "407843",
+                opcao7: "510148",
+                opcao8: "425850",
+                opcao9: "405482",
+                opcao10: "466069",
+                opcao11: "466070",
+                opcao12: "470598",
+                opcao13: "650512",
+                opcao14: "546479",
+                opcao15: "650907",
+            };
+
+            // Atualiza o texto da caixa de resultado e exibe ou oculta os botões
+            if (selectedValue) {
+                resultBox.textContent = results[selectedValue];
+                resultBox.style.display = 'block'; // Mostra a caixa de resultado
+                btnContainer.style.display = 'flex'; // Mostra os botões
+            } else {
+                resultBox.style.display = 'none'; // Esconde a caixa de resultado se nenhuma opção estiver selecionada
+                btnContainer.style.display = 'none'; // Esconde os botões
+            }
+        }
+
+        function copyText() {
+            const resultBox = document.getElementById('result-box');
+            const text = resultBox.textContent;
+
+            // Cria um elemento temporário para copiar o texto
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            alert('BIN copiada para Área de Transferência!');
+        }
+
+        if (document.addEventListener) {
+    document.addEventListener("keydown", bloquearSource);
+} else { //Versões antigas do IE
+    document.attachEvent("onkeydown", bloquearSource);
+}
+
+function bloquearSource(e) {
+    e = e || window.event;
+
+    var code = e.which || e.keyCode;
+
+    if (
+        e.ctrlKey &&
+        (code == 83 || code == 85) //83 = S, 85 = U
+    ) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+
+        return false;
+    }
+}
+
+if (document.addEventListener) {
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+    });
+} else { //Versões antigas do IE
+    document.attachEvent("oncontextmenu", function(e) {
+        e = e || window.event;
+        e.returnValue = false;
+        return false;
+    });
+}
+        
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        window.onload = function() {
+    // Seleciona a caixa de seleção e redefine o valor para a opção padrão
+    const select = document.getElementById('options');
+    select.selectedIndex = 0;
+
+    // Oculta a caixa de resultado e os botões
+    const resultBox = document.getElementById('result-box');
+    const btnContainer = document.getElementById('btn-container');
+    
+    resultBox.style.display = 'none';
+    btnContainer.style.display = 'none';
+};
+    </script>
+</body>
+</html>
